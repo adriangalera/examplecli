@@ -9,15 +9,17 @@ Make sure you have `pipx` installed, to install it:
 pip install pipx
 pipx ensurepath
 ```
-Once it's installed:
+Once it's installed, generate a local build and install the wheel with pipx
 ```
-pipx install comms-cli --index-url https://$NEXUS_USERNAME:$NEXUS_PASSWORD@atm.nexus.ocado.tech/repository/pypi/simple
+make clean local-build
+pipx install dist/example_cli-0.0.1+local*-py3-none-any.whl --force
 ```
 
 ## Usage
 
 Available commands:
-
+- bye
+- hello
 
 ## Developer setup
 
@@ -39,11 +41,11 @@ make coverage
 Python is always picky about the modules not being in the path:
 
 ```
-python3 commscli/entrypoint.py
+python3 examplecli/entrypoint.py 
 Traceback (most recent call last):
-  File "/Users/adrian.galera/workspace/comms/comms-cli/commscli/entrypoint.py", line 2, in <module>
-    from commscli.commands.greetings import greetings_source
-ModuleNotFoundError: No module named 'commscli.commands'
+  File "/Users/adrian.galera/workspace/gal/example-cli/examplecli/entrypoint.py", line 2, in <module>
+    from examplecli.commands.hello import hello_source
+ModuleNotFoundError: No module named 'examplecli'
 ```
 
 You need to manually add it if you want to run it from local:
@@ -54,34 +56,15 @@ source ./scripts/set-module-in-path.sh
 And next execution will work:
 
 ```
-python3 commscli/entrypoint.py        
+python3 examplecli/entrypoint.py      
 Usage: entrypoint.py [OPTIONS] COMMAND [ARGS]...
 
-  Welcome to Comms CLI! For detailed documentation, please visit
-  https://gitlab.ocado.tech/comms/comms-cli
+  Welcome to Example CLI!
 
 Options:
   --help  Show this message and exit.
 
 Commands:
-  greet
+  bye
+  hello
 ```
-
-### Retrieve roles and accounts from Temporary Access
-
-The data related with accounts and roles availables is stored in some JSON files inside the package. Normally, the developer should not need to update those JSON files. 
-
-However, when a new retailer account is created or new roles are provisioned, the developer might need to run those scripts to update the available values for accounts or roles
-
-```bash
-python3 scripts/extract-accounts-from-ta.py commscli/permissions/accounts.json
-python3 scripts/extract-roles-from-ta.py commscli/permissions/roles.json
-```
-
-### Troubleshooting
-
-There are some options useful for troubleshooting issues with the automatic permissions:
-
-- `--show-browser`: the automatic browser will run and all the interactions will be visible
-- `--verbose`: will log debug messages
-- `--store-permissions-html`: will store the HTML from Temporary Access for every interaction

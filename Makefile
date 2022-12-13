@@ -23,4 +23,5 @@ coverage:
 	coverage xml
 
 local-build:
+	pip install wheel
 	scripts/local-build.sh
