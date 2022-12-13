@@ -1,0 +1,9 @@
+[run]
+source = examplecli
+command_line =-m unittest
+omit=
+    examplecli/entrypoint.py,
+
+[report]
+omit=
+    examplecli/entrypoint.py,

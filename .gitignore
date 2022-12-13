@@ -1,0 +1,11 @@
+.venv
+__pycache__/
+examplecli.egg-info
+example_cli.egg-info
+build
+dist
+.coverage
+coverage.xml
+.pytest_cache
+.vscode
+htmlcov
